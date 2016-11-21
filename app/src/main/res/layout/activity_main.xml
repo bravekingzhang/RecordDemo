@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.hoollyzhang.recorddemo.MainActivity">
+
+    <org.wysaid.view.CameraRecordGLSurfaceView
+        android:id="@+id/record_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp"
+        android:layout_above="@+id/bottom_bar"/>
+
+    <RelativeLayout
+        android:id="@+id/bottom_bar"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+        <TextView
+            android:id="@+id/start_record"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="开始录制"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/change_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="切换摄像头"
+            android:layout_centerInParent="true"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/stop_record"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:text="停止录制"
+            android:gravity="center"/>
+    </RelativeLayout>
+
+</RelativeLayout>
