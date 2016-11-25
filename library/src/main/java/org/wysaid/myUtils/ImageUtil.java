@@ -15,32 +15,6 @@ import java.io.IOException;
 public class ImageUtil extends FileUtil {
 
 
-    public static void saveBitmap(Bitmap bmp) {
-        String path = getPath();
-        long currentTime = System.currentTimeMillis();
-        String filename = path + "/" + currentTime + ".jpg";
-        saveBitmap(bmp, filename);
-    }
-
-    public static void saveBitmap(Bitmap bmp, String filename) {
-
-        Log.i(LOG_TAG, "saving Bitmap : " + filename);
-
-        try {
-            FileOutputStream fileout = new FileOutputStream(filename);
-            BufferedOutputStream bufferOutStream = new BufferedOutputStream(fileout);
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, bufferOutStream);
-            bufferOutStream.flush();
-            bufferOutStream.close();
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Err when saving bitmap...");
-            e.printStackTrace();
-            return;
-        }
-
-        Log.i(LOG_TAG, "Bitmap " + filename + " saved!");
-    }
-
     public static class FaceRects {
         public int numOfFaces; // 实际检测出的人脸数
         public FaceDetector.Face[] faces; // faces.length >= numOfFaces

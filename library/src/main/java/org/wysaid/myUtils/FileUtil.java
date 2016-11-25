@@ -7,7 +7,6 @@ import android.util.Log;
 import org.wysaid.common.Common;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 /**
@@ -16,50 +15,63 @@ import java.io.FileOutputStream;
 public class FileUtil {
 
     public static final String LOG_TAG = Common.LOG_TAG;
-    public static final File externalStorageDirectory = Environment.getExternalStorageDirectory();
+
+    public static final File externalStorageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
+    public static final File videoCacheDirectory = Environment.getDownloadCacheDirectory();
     public static String packageFilesDirectory = null;
     public static String storagePath = null;
-    private static String mDefaultFolder = "libCGE";
+    public static String cachePath = null;
+    private static String mDefaultFolder = "campusx";
 
     public static void setDefaultFolder(String defaultFolder) {
         mDefaultFolder = defaultFolder;
     }
 
-    public static String getPath() {
-        return getPath(null);
+
+    public static String getCachePath(Context context) {
+        if (cachePath == null) {
+            cachePath = videoCacheDirectory.getAbsolutePath() + "/" + mDefaultFolder;
+            File file = new File(cachePath);
+            if (!file.exists()) {
+                if (!file.mkdirs()) {
+                    cachePath = getPathInPackage(context, true);
+                }
+            }
+        }
+        return cachePath + "/rec_" + System.currentTimeMillis() + ".mp4";
     }
+
 
     public static String getPath(Context context) {
 
-        if(storagePath == null) {
+        if (storagePath == null) {
             storagePath = externalStorageDirectory.getAbsolutePath() + "/" + mDefaultFolder;
             File file = new File(storagePath);
-            if(!file.exists()) {
-                if(!file.mkdirs()) {
+            if (!file.exists()) {
+                if (!file.mkdirs()) {
                     storagePath = getPathInPackage(context, true);
                 }
             }
         }
-
         return storagePath;
     }
 
     public static String getPathInPackage(Context context, boolean grantPermissions) {
 
-        if(context == null || packageFilesDirectory != null)
+        if (context == null || packageFilesDirectory != null)
             return packageFilesDirectory;
 
         //手机不存在sdcard, 需要使用 data/data/name.of.package/files 目录
         String path = context.getFilesDir() + "/" + mDefaultFolder;
         File file = new File(path);
 
-        if(!file.exists()) {
-            if(!file.mkdirs()) {
-                Log.e(LOG_TAG, "在pakage目录创建CGE临时目录失败!");
+        if (!file.exists()) {
+            if (!file.mkdirs()) {
+                Log.e(LOG_TAG, "在pakage目录创建" + mDefaultFolder + "临时目录失败!");
                 return null;
             }
 
-            if(grantPermissions) {
+            if (grantPermissions) {
 
                 //设置隐藏目录权限.
                 if (file.setExecutable(true, false)) {
@@ -92,37 +104,4 @@ public class FileUtil {
             Log.e(LOG_TAG, "Error: " + e.getMessage());
         }
     }
-
-    public static String getTextContent(String filename) {
-        Log.i(LOG_TAG, "Reading text : " + filename);
-
-        if(filename == null) {
-            return null;
-        }
-
-        String content = "";
-        byte[] buffer = new byte[256]; //Create cache for reading.
-
-        try {
-
-            FileInputStream filein = new FileInputStream(filename);
-            int len;
-
-            while(true) {
-                len = filein.read(buffer);
-
-                if(len <= 0)
-                    break;
-
-                content += new String(buffer, 0, len);
-            }
-
-        } catch (Exception e) {
-            Log.e(LOG_TAG, "Error: " + e.getMessage());
-            return null;
-        }
-
-        return content;
-    }
-
 }

@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="#20000000"
+    android:padding="4dp"
+    >
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:maxLines="4"
+        android:text="string这就是一个测试"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        />
+</RelativeLayout>

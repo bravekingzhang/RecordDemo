@@ -2,4 +2,6 @@
     <string name="app_name">RecordDemo</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_video_catch_frame">VideoCatchFrameActivity</string>
+    <string name="title_activity_recycler_view_video">RecyclerViewVideoActivity</string>
+    <string name="title_activity_video_player">VideoPlayerActivity</string>
 </resources>

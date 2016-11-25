@@ -35,7 +35,13 @@
         </activity>
         <activity
             android:name=".VideoCatchFrameActivity"
-            android:label="@string/title_activity_video_catch_frame"></activity>
+            android:label="@string/title_activity_video_catch_frame" />
+        <activity
+            android:name=".RecyclerViewVideoActivity"
+            android:label="@string/title_activity_recycler_view_video" />
+        <activity
+            android:name=".VideoPlayerActivity"
+            android:label="@string/title_activity_video_player"></activity>
     </application>
 
 </manifest>

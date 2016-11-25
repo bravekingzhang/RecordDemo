@@ -5,6 +5,9 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -26,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "MainActivity";
     TextView bt_start, bt_stop;
     CameraRecordGLSurfaceView mRecordGLSurfaceView;
-    public static String lastVideoPathFileName = FileUtil.getPath() + "/lastVideoPath.txt";
+    public static String lastVideoPathFileName;
 
     String recordFilename;
 
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        lastVideoPathFileName = FileUtil.getPath(getApplicationContext()) + "/lastVideoPath.txt";
 
         mRecordGLSurfaceView = (CameraRecordGLSurfaceView) findViewById(R.id.record_view);
 
@@ -78,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
-        //mRecordGLSurfaceView.setFitFullView(true);
+        mRecordGLSurfaceView.setFitFullView(true);
         mRecordGLSurfaceView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, final MotionEvent event) {
@@ -130,8 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.start_record:
                 Log.i(TAG, "Start recording...");
                 mRecordGLSurfaceView.setClearColor(1.0f, 0.0f, 0.0f, 0.3f);
-                recordFilename = ImageUtil.getPath() + "/rec_" + System.currentTimeMillis() + ".mp4";
-//                recordFilename = ImageUtil.getPath(CameraDemoActivity.this, false) + "/rec_1.mp4";
+                recordFilename = ImageUtil.getPath(getApplicationContext()) + "/rec_" + System.currentTimeMillis() + ".mp4";
                 mRecordGLSurfaceView.startRecording(recordFilename, new CameraRecordGLSurfaceView.StartRecordingCallback() {
                     @Override
                     public void startRecordingOver(boolean success) {
@@ -168,7 +171,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
         // Forward results to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
@@ -185,5 +187,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Some permissions have been denied
         // ...
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.play_video:
+                startActivity(new Intent(this, RecyclerViewVideoActivity.class));
+                break;
+            case R.id.play_video2:
+                startActivity(new Intent(this, VideoPlayerActivity.class));
+                break;
+            default:
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

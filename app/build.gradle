@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "com.example.hoollyzhang.recorddemo"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -29,12 +29,19 @@ android {
     }
 }
 
+ext {
+    toroVersion = '2.1.0'
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile project(':library')
+    compile "im.ene.toro2:toro:${toroVersion}"
+    compile "im.ene.toro2:toro-ext-exoplayer2:${toroVersion}"
+    compile "im.ene.toro2:toro-extended:${toroVersion}"
     compile 'pub.devrel:easypermissions:0.2.1'
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.github.wseemann:FFmpegMediaMetadataRetriever:1.0.13'
